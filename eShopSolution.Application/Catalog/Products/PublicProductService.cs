@@ -1,19 +1,20 @@
-﻿using eShopSolution.Application.Catalog.Products.Dtos;
-using eShopSolution.Application.Catalog.Products.Dtos.Public;
-using eShopSolution.Application.Dtos;
-using eShopSolution.Data.EF;
+﻿using eShopSolution.Data.EF;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.Catalog.Products.Public;
 
 namespace eShopSolution.Application.Catalog.Products
 {
     public class PublicProductService : IPublicProductService
     {
         private readonly EShopDbContext _context; // Readonly is mean that get value one time 
+
         PublicProductService(EShopDbContext context)
         {
             _context = context;
@@ -59,7 +60,7 @@ namespace eShopSolution.Application.Catalog.Products
             // 4. Select and projection
             var pagedResult = new PagedResult<ProductViewModel>()
             {
-                totalRecord = totalRow,
+                TotalRecord = totalRow,
                 Items = data
             };
             return pagedResult;
