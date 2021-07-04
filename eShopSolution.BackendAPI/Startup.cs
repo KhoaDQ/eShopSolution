@@ -37,6 +37,7 @@ namespace eShopSolution.BackendAPI
 
             services.AddControllersWithViews();
 
+            // Configuration Swagger and In Configure method app.UseSwagger-UI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
