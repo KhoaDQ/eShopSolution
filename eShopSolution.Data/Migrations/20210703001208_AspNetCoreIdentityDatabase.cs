@@ -144,7 +144,7 @@ namespace eShopSolution.Data.Migrations
                 table: "Products",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "DataCreated",
+                column: "DateCreated",
                 value: new DateTime(2021, 7, 3, 7, 12, 8, 474, DateTimeKind.Local).AddTicks(9500));
 
             migrationBuilder.CreateIndex(
@@ -255,7 +255,7 @@ namespace eShopSolution.Data.Migrations
                 table: "Products",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "DataCreated",
+                column: "DateCreated",
                 value: new DateTime(2021, 7, 3, 6, 16, 42, 275, DateTimeKind.Local).AddTicks(4229));
         }
     }

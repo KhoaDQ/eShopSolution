@@ -3,17 +3,34 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eShopSolution.Data.Migrations
 {
-    public partial class ChangeFileLengthType : Migration
+    public partial class UpdateProductTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<long>(
-                name: "FileSize",
-                table: "ProductImages",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
+            migrationBuilder.UpdateData(
+                table: "AppRoles",
+                keyColumn: "Id",
+                keyValue: new Guid("98f8ef41-91ee-4707-bd7b-f5bb79e3a264"),
+                column: "ConcurrencyStamp",
+                value: "ba308622-f782-4894-af44-fac45df0ea6f");
 
+            migrationBuilder.UpdateData(
+                table: "AppUsers",
+                keyColumn: "Id",
+                keyValue: new Guid("251a4f8a-18be-42a3-b83f-e1ded8d8da81"),
+                columns: new[] { "ConcurrencyStamp", "PasswordHash" },
+                values: new object[] { "db81bf01-99bb-474d-a16a-9ef0f68606e3", "AQAAAAEAACcQAAAAEKHM1yCJeM3B+ngIpgVtun4F9u0GONy8CXy/+B0cH147q/OQjord3ySd59K/ozuAVA==" });
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "DateCreated",
+                value: new DateTime(2021, 7, 5, 1, 12, 0, 316, DateTimeKind.Local).AddTicks(1296));
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.UpdateData(
                 table: "AppRoles",
                 keyColumn: "Id",
@@ -33,38 +50,7 @@ namespace eShopSolution.Data.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "DateCreated",
-                value: new DateTime(2021, 7, 3, 23, 23, 7, 713, DateTimeKind.Local).AddTicks(97));
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<int>(
-                name: "FileSize",
-                table: "ProductImages",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(long));
-
-            migrationBuilder.UpdateData(
-                table: "AppRoles",
-                keyColumn: "Id",
-                keyValue: new Guid("98f8ef41-91ee-4707-bd7b-f5bb79e3a264"),
-                column: "ConcurrencyStamp",
-                value: "c70f0b95-b525-4675-9dd2-4b1df2d54b21");
-
-            migrationBuilder.UpdateData(
-                table: "AppUsers",
-                keyColumn: "Id",
-                keyValue: new Guid("251a4f8a-18be-42a3-b83f-e1ded8d8da81"),
-                columns: new[] { "ConcurrencyStamp", "PasswordHash" },
-                values: new object[] { "0c506d4b-9df1-4360-ab61-54981852cb7f", "AQAAAAEAACcQAAAAEK/0zEhGldR0bTM/4zFOtDWuaq0XTYy9OITpV+DQKKlsMsnvbhfCaQgt4DrEtB+E4A==" });
-
-            migrationBuilder.UpdateData(
-                table: "Products",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "DateCreated",
-                value: new DateTime(2021, 7, 3, 22, 1, 0, 862, DateTimeKind.Local).AddTicks(348));
+                value: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
         }
     }
 }

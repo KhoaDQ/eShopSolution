@@ -180,7 +180,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("98f8ef41-91ee-4707-bd7b-f5bb79e3a264"),
-                            ConcurrencyStamp = "ccb5f316-63b2-4101-ac0c-dd5e0754fb77",
+                            ConcurrencyStamp = "ba308622-f782-4894-af44-fac45df0ea6f",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,7 +257,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = new Guid("251a4f8a-18be-42a3-b83f-e1ded8d8da81"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4585f34a-28bb-422a-b67c-0406b513ef9a",
+                            ConcurrencyStamp = "db81bf01-99bb-474d-a16a-9ef0f68606e3",
                             Dob = new DateTime(2000, 5, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "quockhoathcstq@gmail.com",
                             EmailConfirmed = true,
@@ -266,7 +266,7 @@ namespace eShopSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "quockhoathcstq@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAECbKO0CBrWTbf3vhIb04BCX1T7Zu/hvW+DtQCyU+6x1r3Y3Ezp8IyWGBn2TMFxCEzw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKHM1yCJeM3B+ngIpgVtun4F9u0GONy8CXy/+B0cH147q/OQjord3ySd59K/ozuAVA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -583,7 +583,7 @@ namespace eShopSolution.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DataCreated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("OriginalPrice")
@@ -613,7 +613,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DataCreated = new DateTime(2021, 7, 3, 23, 23, 7, 713, DateTimeKind.Local).AddTicks(97),
+                            DateCreated = new DateTime(2021, 7, 5, 1, 12, 0, 316, DateTimeKind.Local).AddTicks(1296),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,

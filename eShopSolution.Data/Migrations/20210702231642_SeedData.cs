@@ -46,7 +46,7 @@ namespace eShopSolution.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "DataCreated", "OriginalPrice", "Price", "SeoAlias" },
+                columns: new[] { "Id", "DateCreated", "OriginalPrice", "Price", "SeoAlias" },
                 values: new object[] { 1, new DateTime(2021, 7, 3, 6, 16, 42, 275, DateTimeKind.Local).AddTicks(4229), 100000m, 200000m, null });
 
             migrationBuilder.InsertData(

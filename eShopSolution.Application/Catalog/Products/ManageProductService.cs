@@ -22,7 +22,7 @@ namespace eShopSolution.Application.Catalog.Products
         private readonly EShopDbContext _context; // Readonly is mean that get value one time 
         private readonly IStorageService _storageService;
 
-        ManageProductService(EShopDbContext context, IStorageService storageService)
+        public ManageProductService(EShopDbContext context, IStorageService storageService)
         {
             _context = context;
             _storageService = storageService;
@@ -43,7 +43,7 @@ namespace eShopSolution.Application.Catalog.Products
                 OriginalPrice = request.OriginalPrice,
                 Stock = request.Stock,
                 ViewCount = 0,
-                DataCreated = DateTime.Now,
+                DateCreated = DateTime.Now,
                 ProductTranslations = new List<ProductTranslation>()
                 {
                     new ProductTranslation(){ 
@@ -74,7 +74,8 @@ namespace eShopSolution.Application.Catalog.Products
                 };
             }
             _context.Products.Add(product);
-            return await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
+            return product.Id;
         }
 
         public async Task<int> Delete(int productId)
@@ -118,7 +119,7 @@ namespace eShopSolution.Application.Catalog.Products
                 .Select(x => new ProductViewModel() { 
                     Id = x.p.Id,
                     Name = x.pt.Name,
-                    DataCreated = x.p.DataCreated,
+                    DataCreated = x.p.DateCreated,
                     Description = x.pt.Description,
                     Details = x.pt.Details,
                     LanguageId = x.pt.LanguageId,
@@ -258,6 +259,31 @@ namespace eShopSolution.Application.Catalog.Products
                     SortOrder = i.SortOrder
                 }
                 ).ToListAsync();
+        }
+
+
+        public async Task<ProductViewModel> GetById(int productId, string languageId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var productTrans = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+
+            var pV = new ProductViewModel()
+            {
+                Id = product.Id,
+                DataCreated = product.DateCreated,
+                Description = productTrans != null ? productTrans.Description : null,
+                LanguageId = productTrans.LanguageId,
+                Details = productTrans != null ? productTrans.Details : null,
+                Name = productTrans != null ? productTrans.Name : null,
+                SeoAlias = productTrans != null ? productTrans.SeoAlias : null,
+                SeoDescription = productTrans != null ? productTrans.SeoDescription : null,
+                SeoTitle = productTrans != null ? productTrans.SeoTitle : null,
+                Stock = product.Stock,
+                OriginalPrice = product.OriginalPrice,
+                Price = product.Price,
+                ViewCount = product.ViewCount
+            };
+            return pV;
         }
     }
 }

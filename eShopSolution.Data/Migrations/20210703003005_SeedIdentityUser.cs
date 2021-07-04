@@ -35,7 +35,7 @@ namespace eShopSolution.Data.Migrations
                 table: "Products",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "DataCreated",
+                column: "DateCreated",
                 value: new DateTime(2021, 7, 3, 7, 30, 5, 206, DateTimeKind.Local).AddTicks(3475));
         }
 
@@ -69,7 +69,7 @@ namespace eShopSolution.Data.Migrations
                 table: "Products",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "DataCreated",
+                column: "DateCreated",
                 value: new DateTime(2021, 7, 3, 7, 12, 8, 474, DateTimeKind.Local).AddTicks(9500));
         }
     }

@@ -19,12 +19,13 @@ namespace eShopSolution.Application.Catalog.Products
             _context = context;
         }
 
-        public async Task<List<ProductViewModel>> GetAll()
+        public async Task<List<ProductViewModel>> GetAll(string languageId)
         {
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.Id
+                        where pt.LanguageId == languageId
                         select new { p, pt, pic };
 
             var data = await query
@@ -32,7 +33,7 @@ namespace eShopSolution.Application.Catalog.Products
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
-                    DataCreated = x.p.DataCreated,
+                    DataCreated = x.p.DateCreated,
                     Description = x.pt.Description,
                     Details = x.pt.Details,
                     LanguageId = x.pt.LanguageId,
@@ -55,6 +56,7 @@ namespace eShopSolution.Application.Catalog.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.Id
+                        where pt.LanguageId == request.languageId
                         select new { p, pt, pic };
             // 2. Filter
             if (request.CategoryId.HasValue && request.CategoryId.Value > 0)
@@ -71,7 +73,7 @@ namespace eShopSolution.Application.Catalog.Products
                 {
                     Id = x.p.Id,
                     Name = x.pt.Name,
-                    DataCreated = x.p.DataCreated,
+                    DataCreated = x.p.DateCreated,
                     Description = x.pt.Description,
                     Details = x.pt.Details,
                     LanguageId = x.pt.LanguageId,
