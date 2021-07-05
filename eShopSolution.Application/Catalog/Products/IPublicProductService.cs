@@ -8,8 +8,7 @@ namespace eShopSolution.Application.Catalog.Products
     public interface IPublicProductService
     {
         // Different with IProductService because this interface is used for User service
-        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
 
-        Task<List<ProductViewModel>> GetAll(string languageId);
     }
 }
