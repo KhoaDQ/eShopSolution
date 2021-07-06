@@ -89,6 +89,7 @@ namespace eShopSolution.BackendAPI
             });
 
             // Validate token -> wrong -> code 401
+            // Target : protect api by token
             string issuer = Configuration.GetValue<string>("Tokens:Issuer");
             string signingKey = Configuration.GetValue<string>("Tokens:Key");
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
