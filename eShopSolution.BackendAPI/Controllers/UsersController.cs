@@ -12,6 +12,7 @@ namespace eShopSolution.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -37,7 +38,7 @@ namespace eShopSolution.BackendAPI.Controllers
             return Ok(resultToken);
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
@@ -51,6 +52,14 @@ namespace eShopSolution.BackendAPI.Controllers
                 return BadRequest("Register failed");
             }
             return Ok();
+        }
+
+        // http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request) // FromQuery mean that all parameters of request is taked from Query, it also be used in Get method // FromBody with Post method
+        {
+            var user = await _userService.GetUserPaging(request);
+            return Ok(user);
         }
     }
 }
