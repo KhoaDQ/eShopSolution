@@ -18,5 +18,7 @@ namespace eShopSolution.Application.System.User
         Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request);
 
         Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
+
+        Task<ApiResult<bool>> Delete(Guid id);
     }
 }
