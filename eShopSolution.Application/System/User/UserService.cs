@@ -84,6 +84,9 @@ namespace eShopSolution.Application.System.User
             {
                 return new ApiErrorResult<UserViewModel>("User is invalid");
             }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
             var userVm = new UserViewModel()
             {
                 Email = user.Email,
@@ -92,7 +95,8 @@ namespace eShopSolution.Application.System.User
                 Dob = user.Dob,
                 Id = user.Id,
                 LastName = user.LastName,
-                UserName = user.UserName
+                UserName = user.UserName,
+                Roles = roles
             };
             return new ApiSuccessResult<UserViewModel>(userVm);
         }
@@ -159,6 +163,36 @@ namespace eShopSolution.Application.System.User
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Register was failed");
+        }
+
+        public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("User is not valid");
+            }
+            var removeRoles = request.Roles.Where(x => x.Selected == false).Select(x => x.Name).ToList();
+
+            foreach (var role in removeRoles)
+            {
+                if (await _userManager.IsInRoleAsync(user, role) == false)
+                {
+                    await _userManager.RemoveFromRoleAsync(user, role);
+                }
+            }
+            await _userManager.RemoveFromRolesAsync(user, removeRoles);
+
+            var addRoles = request.Roles.Where(x => x.Selected == true).Select(x => x.Name).ToList();
+            foreach (var role in addRoles)
+            {
+                if (await _userManager.IsInRoleAsync(user, role) == false)
+                {
+                    await _userManager.AddToRoleAsync(user, role);
+                }
+            }
+
+            return new ApiSuccessResult<bool>();
         }
 
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
