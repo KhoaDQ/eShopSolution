@@ -23,11 +23,10 @@ namespace eShopSolution.BackendAPI.Controllers
             _productService = productService;
         }
 
-        // http://localhost:post/product?pageIndex=1&pageSize=10&categoryId=
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetAllPaging(string languageId, [FromQuery] GetPublicProductPagingRequest request) // FromQuery mean that all parameters of request is taked from Query, it also be used in Get method // FromBody with Post method
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request) // FromQuery mean that all parameters of request is taked from Query, it also be used in Get method // FromBody with Post method
         {
-            var products = await _productService.GetAllByCategoryId(languageId, request);
+            var products = await _productService.GetAllPaging(request);
             return Ok(products);
         }
 
