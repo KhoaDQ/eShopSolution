@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eShopSolution.ViewModels.Catalog.Categories;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,7 +15,6 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public DateTime DataCreated { get; set; }
         public string SeoAlias { get; set; }
 
-
         public string Name { set; get; }
         public string Description { set; get; }
         public string Details { set; get; }
@@ -22,5 +22,6 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public string SeoTitle { set; get; }
 
         public string LanguageId { set; get; }
+        public List<string> Categories { get; set; } = new List<string>();
     }
 }
