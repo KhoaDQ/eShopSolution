@@ -50,5 +50,3 @@ namespace eShopSolution.AdminApp.Services
         }
     }
 }
-
-// Làm bài tập chuyển sang Base -> bài 36
