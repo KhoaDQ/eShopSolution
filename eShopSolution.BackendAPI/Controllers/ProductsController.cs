@@ -133,5 +133,19 @@ namespace eShopSolution.BackendAPI.Controllers
                 return BadRequest("Can not find this image in this product");
             return Ok(productImage);
         }
+
+        [HttpPut("{id}/categories")]
+        public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _productService.CategoryAssign(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
     }
 }
