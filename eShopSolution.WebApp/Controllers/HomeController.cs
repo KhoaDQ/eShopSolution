@@ -9,24 +9,33 @@ using eShopSolution.WebApp.Models;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using LazZiya.ExpressLocalization;
+using eShopSolution.ApiIntegration;
 
 namespace eShopSolution.WebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ISharedCultureLocalizer _loc;
 
-        public HomeController(ILogger<HomeController> logger, ISharedCultureLocalizer loc)
+        //private readonly ISharedCultureLocalizer _loc;
+        private readonly ISlideApiClient _slideApiClient;
+
+        public HomeController(ILogger<HomeController> logger, ISharedCultureLocalizer loc, ISlideApiClient slideApiClient)
         {
             _logger = logger;
-            _loc = loc;
+            //_loc = loc;
+            _slideApiClient = slideApiClient;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var msg = _loc.GetLocalizedString("Vietnamese");
-            return View();
+            //var msg = _loc.GetLocalizedString("Vietnamese");
+
+            var viewmodel = new HomeViewModel
+            {
+                Slides = await _slideApiClient.GetAll()
+            };
+            return View(viewmodel);
         }
 
         public IActionResult Privacy()
