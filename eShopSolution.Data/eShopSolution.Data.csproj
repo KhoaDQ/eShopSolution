@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20210703000138_AspNetCoreIdentityDatabase.cs" />
-    <Compile Remove="Migrations\20210703000138_AspNetCoreIdentityDatabase.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.16">
       <PrivateAssets>all</PrivateAssets>
