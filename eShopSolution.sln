@@ -26,7 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Hosts", "3. Hosts", "{2C5B7B58-27E4-4D22-9FED-09BBC149D183}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.AdminApp", "eShopSolution.AdminApp\eShopSolution.AdminApp.csproj", "{48F13266-6C46-441D-BEE5-2141F0BBBD5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.AdminApp", "eShopSolution.AdminApp\eShopSolution.AdminApp.csproj", "{48F13266-6C46-441D-BEE5-2141F0BBBD5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.ApiIntegration", "eShopSolution.ApiIntegration\eShopSolution.ApiIntegration.csproj", "{888B91BB-AA4E-454E-9284-0CE2161BF488}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{48F13266-6C46-441D-BEE5-2141F0BBBD5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48F13266-6C46-441D-BEE5-2141F0BBBD5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48F13266-6C46-441D-BEE5-2141F0BBBD5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{888B91BB-AA4E-454E-9284-0CE2161BF488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{888B91BB-AA4E-454E-9284-0CE2161BF488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{888B91BB-AA4E-454E-9284-0CE2161BF488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{888B91BB-AA4E-454E-9284-0CE2161BF488}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{C1AD0EE4-958D-414C-97C4-B9AEC049437F} = {FEAF83F3-F4F1-4328-930C-35F4DB8D267A}
 		{19EE130F-D2DD-428D-A707-E5574A2F3A43} = {2C5B7B58-27E4-4D22-9FED-09BBC149D183}
 		{48F13266-6C46-441D-BEE5-2141F0BBBD5E} = {2C5B7B58-27E4-4D22-9FED-09BBC149D183}
+		{888B91BB-AA4E-454E-9284-0CE2161BF488} = {2C5B7B58-27E4-4D22-9FED-09BBC149D183}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33A0493D-AD8E-4C63-98BD-5449D360A5BF}

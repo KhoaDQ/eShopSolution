@@ -13,7 +13,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntegration
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient
     {
@@ -97,7 +97,7 @@ namespace eShopSolution.AdminApp.Services
 
         public async Task<PagedResult<ProductViewModel>> GetPagings(GetManageProductPagingRequest request)
         {
-            var data = await base.GetAsync<PagedResult<ProductViewModel>>(
+            var data = await GetAsync<PagedResult<ProductViewModel>>(
                 $"/api/products/paging?pageIndex={request.PageIndex}" +
                 $"&pageSize={request.PageSize}" +
                 $"&keyword={request.Keyword}&languageId={ request.LanguageId}&categoryId={request.CategoryId}");
