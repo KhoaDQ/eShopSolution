@@ -1,14 +1,14 @@
-﻿using eShopSolution.WebApp.Models;
-using LazZiya.ExpressLocalization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using eShopSolution.WebApp.Models;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
+using LazZiya.ExpressLocalization;
 
 namespace eShopSolution.WebApp.Controllers
 {

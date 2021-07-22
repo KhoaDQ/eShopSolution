@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace eShopSolution.WebApp.LocaliztionsResources
+namespace eShopSolution.WebApp.LocalizationResources
 {
-    public class ViewLocalizationResource
+    public class ExpressLocalizationResource
     {
     }
 }
