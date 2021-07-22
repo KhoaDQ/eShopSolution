@@ -22,13 +22,13 @@ namespace eShopSolution.Data.Entities
         public int ViewCount { get; set; }
         public DateTime DateCreated { get; set; }
         public string SeoAlias { get; set; }
+        public bool? IsFeatured { get; set; }
 
         public List<ProductInCategory> ProductInCategories { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
         public List<Cart> Carts { get; set; }
         public List<ProductTranslation> ProductTranslations { get; set; }
         public List<ProductImage> ProductImages { get; set; }
-
     }
 }
 
@@ -48,7 +48,6 @@ namespace eShopSolution.Data.Entities
 
         [Required]
         public string SeoAlias { get; set; }
-
     }
 }
 */

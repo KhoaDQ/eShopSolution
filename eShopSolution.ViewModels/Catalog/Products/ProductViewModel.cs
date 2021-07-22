@@ -14,6 +14,7 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public int ViewCount { get; set; }
         public DateTime DataCreated { get; set; }
         public string SeoAlias { get; set; }
+        public bool? IsFeatured { set; get; }
 
         public string Name { set; get; }
         public string Description { set; get; }
