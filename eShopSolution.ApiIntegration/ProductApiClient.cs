@@ -156,5 +156,10 @@ namespace eShopSolution.ApiIntegration
 
             return data;
         }
+
+        public async Task<bool> DeleteProduct(int id)
+        {
+            return await Delete($"/api/products/" + id);
+        }
     }
 }
