@@ -1,23 +1,23 @@
-﻿using eShopSolution.ApiIntegration;
-using eShopSolution.ViewModels.Catalog.Products;
-using eShopSolution.WebApp.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eShopSolution.ApiIntegration;
+using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.WebApp.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace eShopSolution.WebApp.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ICategoryApiClient _categoryApiClient;
         private readonly IProductApiClient _productApiClient;
+        private readonly ICategoryApiClient _categoryApiClient;
 
-        public ProductController(ICategoryApiClient categoryApiClient, IProductApiClient productApiClient)
+        public ProductController(IProductApiClient productApiClient, ICategoryApiClient categoryApiClient)
         {
-            _categoryApiClient = categoryApiClient;
             _productApiClient = productApiClient;
+            _categoryApiClient = categoryApiClient;
         }
 
         public async Task<IActionResult> Detail(int id, string culture)
@@ -25,10 +25,7 @@ namespace eShopSolution.WebApp.Controllers
             var product = await _productApiClient.GetById(id, culture);
             return View(new ProductDetailViewModel()
             {
-                Product = product,
-                Category = await _categoryApiClient.GetById(culture, id)
-                //,ProductImages =
-                //,RelatedProducts =
+                Product = product
             });
         }
 
@@ -43,8 +40,8 @@ namespace eShopSolution.WebApp.Controllers
             });
             return View(new ProductCategoryViewModel()
             {
+                Category = await _categoryApiClient.GetById(culture, id),
                 Products = products,
-                Category = await _categoryApiClient.GetById(culture, id)
             }); ;
         }
     }
