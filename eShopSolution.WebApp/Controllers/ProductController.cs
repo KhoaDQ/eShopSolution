@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eShopSolution.ApiIntegration;
+using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.WebApp.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +11,34 @@ namespace eShopSolution.WebApp.Controllers
 {
     public class ProductController : Controller
     {
+        private readonly ICategoryApiClient _categoryApiClient;
+        private readonly IProductApiClient _productApiClient;
+
+        public ProductController(ICategoryApiClient categoryApiClient, IProductApiClient productApiClient)
+        {
+            _categoryApiClient = categoryApiClient;
+            _productApiClient = productApiClient;
+        }
+
         public IActionResult Detail()
         {
             return View();
         }
 
-        public IActionResult Category(int id)
+        public async Task<IActionResult> Category(int id, string culture, int page = 1)
         {
-            return View();
+            var products = await _productApiClient.GetPagings(new GetManageProductPagingRequest()
+            {
+                CategoryId = id,
+                PageIndex = page,
+                LanguageId = culture,
+                PageSize = 10
+            });
+            return View(new ProductCategoryViewModel()
+            {
+                Products = products,
+                Category = await _categoryApiClient.GetById(culture, id)
+            }); ;
         }
     }
 }
