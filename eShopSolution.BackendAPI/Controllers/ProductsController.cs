@@ -87,7 +87,7 @@ namespace eShopSolution.BackendAPI.Controllers
 
         [HttpDelete("{productId}")]
         [Authorize]
-        public async Task<IActionResult> Delete([FromBody] int productId)
+        public async Task<IActionResult> Delete(int productId)
         {
             var affectedResult = await _productService.Delete(productId);
             if (affectedResult == 0)
