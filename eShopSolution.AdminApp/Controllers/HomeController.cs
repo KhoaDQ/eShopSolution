@@ -39,10 +39,11 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Language(NavigationViewModel navigation)
+        public IActionResult Language(NavigationViewModel viewModel)
         {
-            HttpContext.Session.SetString(SystemConstant.AppSettings.DefaultLanguageId, navigation.CurrentLanguageId);
-            return RedirectToAction("Index");
+            HttpContext.Session.SetString(SystemConstant.AppSettings.DefaultLanguageId,
+                viewModel.CurrentLanguageId);
+            return Redirect(viewModel.ReturnUrl);
         }
     }
 }

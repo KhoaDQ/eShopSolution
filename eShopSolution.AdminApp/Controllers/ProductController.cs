@@ -105,6 +105,43 @@ namespace eShopSolution.AdminApp.Controllers
             return View(roleAssignRequest);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstant.AppSettings.DefaultLanguageId);
+
+            var product = await _productApiClient.GetById(id, languageId);
+            var productVm = new ProductUpdateRequest()
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Details = product.Details,
+                Name = product.Name,
+                SeoAlias = product.SeoAlias,
+                SeoDescription = product.SeoDescription,
+                SeoTitle = product.SeoTitle
+            };
+            return View(productVm);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit([FromForm] ProductUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _productApiClient.UpdateProduct(request);
+            if (result)
+            {
+                TempData["result"] = "Update product successfully";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Update failed");
+            return View(request);
+        }
+
         private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
         {
             var languageId = HttpContext.Session.GetString(SystemConstant.AppSettings.DefaultLanguageId);
