@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using eShopSolution.ApiIntegration;
 using eShopSolution.Utilities.Constants;
+using eShopSolution.ViewModels.Sales;
 using eShopSolution.WebApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,39 @@ namespace eShopSolution.WebApp.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Checkout()
+        {
+            return View(GetCheckoutViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Checkout(CheckoutViewModel request)
+        {
+            var model = GetCheckoutViewModel();
+            var orderDetails = new List<OrderDetailViewModel>();
+            foreach (var item in model.CartItems)
+            {
+                orderDetails.Add(new OrderDetailViewModel()
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity
+                });
+            }
+
+            var checkoutRequest = new CheckoutRequest()
+            {
+                Name = request.CheckoutModel.Name,
+                Address = request.CheckoutModel.Address,
+                Email = request.CheckoutModel.Email,
+                PhoneNumber = request.CheckoutModel.PhoneNumber
+            };
+
+            // ADD TO API
+
+            TempData["SuccessMsg"] = "Order puschased successful";
+            return View(model);
         }
 
         [HttpGet]
@@ -88,6 +122,22 @@ namespace eShopSolution.WebApp.Controllers
 
             HttpContext.Session.SetString(SystemConstant.CartSession, JsonConvert.SerializeObject(currentCart));
             return Ok(currentCart);
+        }
+
+        private CheckoutViewModel GetCheckoutViewModel()
+        {
+            var session = HttpContext.Session.GetString(SystemConstant.CartSession);
+
+            List<CartItemViewModel> currentCart = new List<CartItemViewModel>();
+            if (session != null)
+                currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
+            var checkoutVm = new CheckoutViewModel()
+            {
+                CartItems = currentCart,
+                CheckoutModel = new CheckoutRequest()
+            };
+
+            return checkoutVm;
         }
     }
 }
