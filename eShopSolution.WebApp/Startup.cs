@@ -4,7 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using eShopSolution.ApiIntegration;
+using eShopSolution.ViewModels.System.User;
 using eShopSolution.WebApp.LocalizationResources;
+using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +38,9 @@ namespace eShopSolution.WebApp
                 new CultureInfo("en"),
                 new CultureInfo("vi"),
             };
+
+            services.AddControllersWithViews()
+                                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); // That mean Register all validator from ViewModel or other assembly containing LoginRequestValidator
 
             services.AddControllersWithViews()
                 .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
