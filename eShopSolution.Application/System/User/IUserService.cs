@@ -22,5 +22,7 @@ namespace eShopSolution.Application.System.User
         Task<ApiResult<bool>> Delete(Guid id);
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+
+        Task<List<UserViewModel>> GetAll();
     }
 }
