@@ -77,6 +77,23 @@ namespace eShopSolution.Application.System.User
             return new ApiErrorResult<bool>("Delete failed");
         }
 
+        public Task<List<UserViewModel>> GetAll()
+        {
+            var query = _userManager.Users;
+
+            var data = query.Select(x => new UserViewModel()
+            {
+                Email = x.Email,
+                PhoneNumber = x.PhoneNumber,
+                UserName = x.UserName,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Id = x.Id
+            }).ToListAsync();
+
+            return data;
+        }
+
         public async Task<ApiResult<UserViewModel>> GetById(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());

@@ -22,6 +22,13 @@ namespace eShopSolution.BackendAPI.Controllers
             _userService = userService;
         }
 
+        [HttpGet("getall")]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _userService.GetAll();
+            return Ok(users);
+        }
+
         [HttpPost("authenticate")]
         [AllowAnonymous]
         public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)

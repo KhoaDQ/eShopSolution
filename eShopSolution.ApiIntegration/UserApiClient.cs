@@ -13,13 +13,14 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.ApiIntegration
 {
-    public class UserApiClient : IUserApiClient
+    public class UserApiClient : BaseApiClient, IUserApiClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        : base(httpClientFactory, httpContextAccessor, configuration)
         {
             _configuration = configuration;
             _httpClientFactory = httpClientFactory;
@@ -57,6 +58,12 @@ namespace eShopSolution.ApiIntegration
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
             }
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
+        }
+
+        public async Task<List<UserViewModel>> GetAll()
+        {
+            var data = await GetListAsync<UserViewModel>($"/api/users/getall");
+            return data;
         }
 
         public async Task<ApiResult<UserViewModel>> GetById(Guid id)
