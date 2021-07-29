@@ -494,7 +494,7 @@ namespace eShopSolution.Application.Catalog.Products
             return data;
         }
 
-        public async Task<List<ProductViewModel>> GetAll(string languageId)
+        public async Task<List<ProductViewModel>> GetAll(string languageId, int? categoryId)
         {
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
@@ -506,6 +506,11 @@ namespace eShopSolution.Application.Catalog.Products
                         from c in picc.DefaultIfEmpty()
                         where pt.LanguageId == languageId && (pi == null || pi.IsDefault == true)
                         select new { p, pt, pic, pi };
+
+            if (categoryId != null && categoryId != 0)
+            {
+                query = query.Where(p => p.pic.CategoryId == categoryId);
+            }
 
             var data = await query
                 .Select(x => new ProductViewModel()

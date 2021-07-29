@@ -45,6 +45,6 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take);
 
-        Task<List<ProductViewModel>> GetAll(string languageId);
+        Task<List<ProductViewModel>> GetAll(string languageId, int? categoryId);
     }
 }

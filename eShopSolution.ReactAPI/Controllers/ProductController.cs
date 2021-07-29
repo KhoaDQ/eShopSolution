@@ -1,7 +1,9 @@
 ﻿using eShopSolution.ApiIntegration;
 using eShopSolution.ReactAPI.Common;
 using eShopSolution.ReactAPI.Models;
+using eShopSolution.Utilities.Constants;
 using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -29,15 +31,17 @@ namespace eShopSolution.ReactAPI.Controllers
             _categoryApiClient = categoryApiClient;
         }
 
-        [Route("GetAll/{languageId}")]
+        [Route("GetAll")]
         [HttpGet]
-        public async Task<JsonResult> GetAll(string languageId)
+        public async Task<JsonResult> GetAll([FromQuery] GetManageProductPagingRequest request)
         {
-            List<ProductViewModel> data = new List<ProductViewModel>();
-            data = await _productApiClient.GetAll(languageId);
-            DataTable dataTable = converter.ToDataTable(data);
+            List<ProductViewModel> products = new List<ProductViewModel>();
+            products = await _productApiClient.GetAll(request.LanguageId, request.CategoryId);
+            var categories = await _categoryApiClient.GetAll(request.LanguageId);
+            var result = new { products, categories };
+            // DataTable dataTable = converter.ToDataTable(data);
 
-            return new JsonResult(dataTable);
+            return new JsonResult(result);
         }
 
         [Route("GetById")]
@@ -112,45 +116,46 @@ namespace eShopSolution.ReactAPI.Controllers
             return new JsonResult("Delete failed");
         }
 
-        //[Route("RoleAssign")]
-        //[HttpPost]
-        //public async Task<IActionResult> RoleAssign([FromBody] UserIdModel userid)
-        //{
-        //    Guid g = Guid.Parse(userid.Id);
-        //    var roleAssignRequest = await GetRoleAssignRequest(g);
-        //    return new JsonResult(roleAssignRequest);
-        //}
+        [Route("CategoryAssign")]
+        [HttpPost]
+        public async Task<IActionResult> CategoryAssign([FromBody] AssignProductIdModel productId)
+        {
+            var productAssignRequest = await GetCategoryAssignRequest(productId.Id);
+            return new JsonResult(productAssignRequest);
+        }
 
-        //[Route("NewRoleAssign")]
-        //[HttpPost]
-        //public async Task<IActionResult> NewRoleAssign([FromBody] RoleAssignRequest request)
-        //{
-        //    var result = await _productApiClient.RoleAssign(request.Id, request);
+        [Route("NewCategoryAssign")]
+        [HttpPost]
+        public async Task<IActionResult> NewCategoryAssign([FromBody] CategoryAssignRequest request)
+        {
+            var result = await _productApiClient.CategoryAssign(request.Id, request);
 
-        //    if (result.IsSuccessed)
-        //    {
-        //        return new JsonResult("Assigned Successfully");
-        //    }
+            if (result.IsSuccessed)
+            {
+                return new JsonResult("Assigned Successfully");
+            }
 
-        //    return new JsonResult("Assign failed");
-        //}
+            return new JsonResult("Assign failed");
+        }
 
-        //private async Task<RoleAssignRequest> GetRoleAssignRequest(Guid id)
-        //{
-        //    var userObj = await _productApiClient.GetById(id);
-        //    var roleObj = await _roleApiClient.GetAll();
-        //    var roleAssignRequest = new RoleAssignRequest();
-        //    foreach (var role in roleObj.ResultObj)
-        //    {
-        //        roleAssignRequest.Roles.Add(new SelectedItem()
-        //        {
-        //            Id = role.Id.ToString(),
-        //            Name = role.Name,
-        //            Selected = userObj.ResultObj.Roles.Contains(role.Name)
-        //        });
-        //    }
+        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstant.AppSettings.DefaultLanguageId);
 
-        //    return roleAssignRequest;
-        //}
+            var productObj = await _productApiClient.GetById(id, languageId);
+            var categories = await _categoryApiClient.GetAll(languageId);
+            var categoryAssignRequest = new CategoryAssignRequest();
+            foreach (var item in categories)
+            {
+                categoryAssignRequest.Categories.Add(new SelectedItem()
+                {
+                    Id = item.Id.ToString(),
+                    Name = item.Name,
+                    Selected = productObj.Categories.Contains(item.Name)
+                });
+            }
+
+            return categoryAssignRequest;
+        }
     }
 }

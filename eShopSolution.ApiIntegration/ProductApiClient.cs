@@ -167,9 +167,9 @@ namespace eShopSolution.ApiIntegration
             return await Delete($"/api/products/" + id);
         }
 
-        public async Task<List<ProductViewModel>> GetAll(string languageId)
+        public async Task<List<ProductViewModel>> GetAll(string languageId, int? categoryId)
         {
-            var data = await GetListAsync<ProductViewModel>($"/api/products/getall/{languageId}");
+            var data = await GetListAsync<ProductViewModel>($"/api/products/getall?languageId={languageId}&categoryId={categoryId}");
             return data;
         }
     }

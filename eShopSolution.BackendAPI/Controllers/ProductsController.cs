@@ -22,11 +22,11 @@ namespace eShopSolution.BackendAPI.Controllers
             _productService = productService;
         }
 
-        [HttpGet("getall/{languageId}")]
+        [HttpGet("getall")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll(string languageId)
+        public async Task<IActionResult> GetAll([FromQuery] GetManageProductPagingRequest request)
         {
-            var products = await _productService.GetAll(languageId);
+            var products = await _productService.GetAll(request.LanguageId, request.CategoryId);
             return Ok(products);
         }
 
