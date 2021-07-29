@@ -16,7 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 
-namespace eShopSolution.AdminApp.Controllers
+namespace eShopSolution.ReactAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -51,7 +51,7 @@ namespace eShopSolution.AdminApp.Controllers
                 return null;//View();
             }
 
-            var userPrincipal = this.ValidateToken(result.ResultObj);
+            var userPrincipal = ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),

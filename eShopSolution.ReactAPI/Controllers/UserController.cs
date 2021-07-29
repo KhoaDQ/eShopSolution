@@ -1,6 +1,7 @@
 ﻿using eShopSolution.ApiIntegration;
 using eShopSolution.ReactAPI.Common;
 using eShopSolution.ReactAPI.Models;
+using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -96,6 +97,47 @@ namespace eShopSolution.ReactAPI.Controllers
                 return new JsonResult("Deleted Successfully");
             }
             return new JsonResult("Delete failed");
+        }
+
+        [Route("RoleAssign")]
+        [HttpPost]
+        public async Task<IActionResult> RoleAssign([FromBody] UserIdModel userid)
+        {
+            Guid g = Guid.Parse(userid.Id);
+            var roleAssignRequest = await GetRoleAssignRequest(g);
+            return new JsonResult(roleAssignRequest);
+        }
+
+        [Route("NewRoleAssign")]
+        [HttpPost]
+        public async Task<IActionResult> NewRoleAssign([FromBody] RoleAssignRequest request)
+        {
+            var result = await _userApiClient.RoleAssign(request.Id, request);
+
+            if (result.IsSuccessed)
+            {
+                return new JsonResult("Assigned Successfully");
+            }
+
+            return new JsonResult("Assign failed");
+        }
+
+        private async Task<RoleAssignRequest> GetRoleAssignRequest(Guid id)
+        {
+            var userObj = await _userApiClient.GetById(id);
+            var roleObj = await _roleApiClient.GetAll();
+            var roleAssignRequest = new RoleAssignRequest();
+            foreach (var role in roleObj.ResultObj)
+            {
+                roleAssignRequest.Roles.Add(new SelectedItem()
+                {
+                    Id = role.Id.ToString(),
+                    Name = role.Name,
+                    Selected = userObj.ResultObj.Roles.Contains(role.Name)
+                });
+            }
+
+            return roleAssignRequest;
         }
     }
 }

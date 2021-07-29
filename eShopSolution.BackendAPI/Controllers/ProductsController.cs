@@ -22,6 +22,14 @@ namespace eShopSolution.BackendAPI.Controllers
             _productService = productService;
         }
 
+        [HttpGet("getall")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll([FromQuery] GetManageProductPagingRequest request)
+        {
+            var products = await _productService.GetAll(request.LanguageId, request.CategoryId);
+            return Ok(products);
+        }
+
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request) // FromQuery mean that all parameters of request is taked from Query, it also be used in Get method // FromBody with Post method
         {
