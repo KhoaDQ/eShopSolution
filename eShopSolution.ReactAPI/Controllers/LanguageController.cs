@@ -24,7 +24,6 @@ namespace eShopSolution.ReactAPI.Controllers
 
         [Route("LanguageResult")]
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> LanguageResult()
         {
             var languages = await _languageApiClient.GetAll();
@@ -37,6 +36,15 @@ namespace eShopSolution.ReactAPI.Controllers
             };
 
             return new JsonResult(navigationVm);
+        }
+
+        [Route("CallChangeLanguage")]
+        [HttpPost]
+        public IActionResult CallChangeLanguage(NavigationViewModel viewModel)
+        {
+            HttpContext.Session.SetString(SystemConstant.AppSettings.DefaultLanguageId,
+                viewModel.CurrentLanguageId);
+            return Ok();// Redirect(viewModel.ReturnUrl);
         }
     }
 }

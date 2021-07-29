@@ -166,5 +166,11 @@ namespace eShopSolution.ApiIntegration
         {
             return await Delete($"/api/products/" + id);
         }
+
+        public async Task<List<ProductViewModel>> GetAll(string languageId)
+        {
+            var data = await GetListAsync<ProductViewModel>($"/api/products/getall/{languageId}");
+            return data;
+        }
     }
 }
