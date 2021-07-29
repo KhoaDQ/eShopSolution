@@ -1,5 +1,6 @@
 ﻿using eShopSolution.ApiIntegration;
 using eShopSolution.ReactAPI.Common;
+using eShopSolution.ReactAPI.Models;
 using eShopSolution.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,60 +40,77 @@ namespace eShopSolution.ReactAPI.Controllers
             return new JsonResult(dataTable);
         }
 
-        //[Route("Logout")]
-        //[HttpPost]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        //    HttpContext.Session.Remove("Token");
-        //    return Ok();
-        //}
+        [Route("GetById")]
+        [HttpPost]
+        public async Task<ProductViewModel> GetById([FromBody] ProductIdModel productIdModel)
+        {
+            var result = await _productApiClient.GetById(productIdModel.Id, productIdModel.LanguageId);
+            return result;
+        }
 
-        //[Route("GetById")]
-        //[HttpPost]
-        //public async Task<UserViewModel> GetById([FromBody] UserIdModel userid)
-        //{
-        //    Guid g = Guid.Parse(userid.Id);
-        //    var result = await _productApiClient.GetById(g);
-        //    return result.ResultObj;
-        //}
+        [Route("Create")]
+        [HttpPost]
+        public async Task<IActionResult> Create()
+        {
+            var dict = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
+            ProductCreateRequest request = new ProductCreateRequest()
+            {
+                Price = Decimal.Parse(dict["Price"]),
+                OriginalPrice = Decimal.Parse(dict["OriginalPrice"]),
+                Stock = Int32.Parse(dict["Stock"]),
+                Name = dict["Name"],
+                Description = dict["Description"],
+                Details = dict["Details"],
+                SeoDescription = dict["SeoDescription"],
+                SeoTitle = dict["SeoTitle"],
+                SeoAlias = dict["SeoAlias"],
+                LanguageId = dict["LanguageId"],
+                ThumbnailImage = HttpContext.Request.Form.Files[0]
+            };
+            var result = await _productApiClient.CreateProduct(request);
+            if (result)
+            {
+                return new JsonResult("Created Successfully");
+            }
+            return new JsonResult("Create failed");
+        }
 
-        //[Route("Create")]
-        //[HttpPost]
-        //public async Task<IActionResult> Create(RegisterRequest request)
-        //{
-        //    var result = await _productApiClient.RegisterUser(request);
-        //    if (result.IsSuccessed)
-        //    {
-        //        return new JsonResult("Created Successfully");
-        //    }
-        //    return new JsonResult("Create failed");
-        //}
+        [Route("Update")]
+        [HttpPut]
+        public async Task<IActionResult> Update()
+        {
+            var dict = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
+            ProductUpdateRequest request = new ProductUpdateRequest()
+            {
+                Id = Int32.Parse(dict["Id"]),
+                Name = dict["Name"],
+                Description = dict["Description"],
+                Details = dict["Details"],
+                SeoDescription = dict["SeoDescription"],
+                SeoTitle = dict["SeoTitle"],
+                SeoAlias = dict["SeoAlias"],
+                LanguageId = dict["LanguageId"],
+                ThumbnailImage = HttpContext.Request.Form.Files[0]
+            };
+            var result = await _productApiClient.UpdateProduct(request);
+            if (result)
+            {
+                return new JsonResult("Updated Successfully");
+            }
+            return new JsonResult("Update failed");
+        }
 
-        //[Route("Update")]
-        //[HttpPut]
-        //public async Task<IActionResult> Update(UserUpdateRequest request)
-        //{
-        //    var result = await _productApiClient.UpdateUser(request.Id, request);
-        //    if (result.IsSuccessed)
-        //    {
-        //        return new JsonResult("Updated Successfully");
-        //    }
-        //    return new JsonResult("Update failed");
-        //}
-
-        //[Route("Delete")]
-        //[HttpPost]
-        //public async Task<IActionResult> Delete([FromBody] UserIdModel userid)
-        //{
-        //    Guid g = Guid.Parse(userid.Id);
-        //    var result = await _productApiClient.Delete(g);
-        //    if (result.IsSuccessed)
-        //    {
-        //        return new JsonResult("Deleted Successfully");
-        //    }
-        //    return new JsonResult("Delete failed");
-        //}
+        [Route("Delete")]
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromBody] ProductDeleteRequest request)
+        {
+            var result = await _productApiClient.DeleteProduct(request.Id);
+            if (result)
+            {
+                return new JsonResult("Deleted Successfully");
+            }
+            return new JsonResult("Delete failed");
+        }
 
         //[Route("RoleAssign")]
         //[HttpPost]

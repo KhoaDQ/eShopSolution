@@ -12,7 +12,7 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public decimal OriginalPrice { get; set; }
         public int Stock { get; set; }
 
-        [Required(ErrorMessage = "You have to input name of product")]
+        //[Required(ErrorMessage = "You have to input name of product")]
         public string Name { set; get; }
 
         public string Description { set; get; }
